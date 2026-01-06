@@ -1,7 +1,4 @@
-// Gurukul Main Page JavaScript
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Watch Demo button functionality
     document.querySelectorAll('.btn-secondary').forEach(button => {
         if (button.textContent.trim() === 'Watch Demo') {
             button.addEventListener('click', function() {
@@ -10,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Get Started button functionality
     document.querySelectorAll('.btn-primary').forEach(button => {
         const text = button.textContent.trim();
         if (text === 'Get Started' || text === 'Start Learning' || text === 'Start Free Trial') {
@@ -20,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Schedule Demo button functionality
     document.querySelectorAll('.btn-outline').forEach(button => {
         if (button.textContent.trim() === 'Schedule Demo') {
             button.addEventListener('click', function() {
@@ -29,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Smooth scrolling for navigation links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -46,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add scroll effect to navbar
     const navbar = document.querySelector('.navbar');
     if (navbar) {
         window.addEventListener('scroll', function() {
@@ -60,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Feature cards hover effect
     document.querySelectorAll('.feature-card').forEach(card => {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-8px) scale(1.02)';
@@ -71,10 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // CTA button interactions
     document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
         button.addEventListener('click', function(e) {
-            // Create ripple effect
             const ripple = document.createElement('span');
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
@@ -96,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add CSS for ripple effect
     const style = document.createElement('style');
     style.textContent = `
         .btn-primary, .btn-secondary {
@@ -122,7 +111,6 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.head.appendChild(style);
 
-    // Intersection Observer for animations
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -137,7 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Observe elements for animation
     document.querySelectorAll('.feature-card, .principle-item').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
@@ -146,7 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Demo Modal Functions
 function showDemoModal() {
     let modal = document.getElementById('demoModal');
     if (!modal) {

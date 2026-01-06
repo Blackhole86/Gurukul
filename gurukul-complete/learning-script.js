@@ -1,13 +1,9 @@
-// Learning Interface JavaScript
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced note suggestions functionality
     document.querySelectorAll('.suggestion-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const textarea = document.getElementById('notesArea');
             const suggestion = btn.dataset.suggestion;
             
-            // Add suggestion with cursor positioning
             const cursorPos = textarea.selectionStart;
             const textBefore = textarea.value.substring(0, cursorPos);
             const textAfter = textarea.value.substring(cursorPos);
@@ -15,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
             textarea.value = textBefore + suggestion + textAfter;
             textarea.focus();
             
-            // Position cursor after the suggestion
             const newPos = cursorPos + suggestion.length;
             textarea.setSelectionRange(newPos, newPos);
             
-            // Visual feedback
             btn.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 btn.style.transform = 'scale(1)';
@@ -27,18 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Enhanced answer options with better feedback
     document.querySelectorAll('.option-btn').forEach(btn => {
         btn.addEventListener('click', function() {
-            // Remove previous selections
             document.querySelectorAll('.option-btn').forEach(b => {
                 b.classList.remove('selected');
             });
             
-            // Add selection with animation
             this.classList.add('selected');
             
-            // Provide feedback based on answer
             if (this.dataset.answer === 'a') {
                 setTimeout(() => {
                     this.classList.add('correct-answer');
@@ -52,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Auto-save functionality for notes
     let saveTimeout;
     const notesArea = document.getElementById('notesArea');
     const autoSaveIndicator = document.querySelector('.auto-save');
@@ -75,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 1000);
         });
 
-        // Load saved notes
         try {
             const savedNotes = localStorage.getItem('gurukul_notes');
             if (savedNotes) {
@@ -86,16 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Progress tracking
     function updateProgress() {
         const progressBar = document.querySelector('.progress-bar');
         const currentProgress = parseInt(progressBar.style.width) || 45;
         
-        // Simulate progress increase based on interactions
         const newProgress = Math.min(currentProgress + 5, 100);
         progressBar.style.width = newProgress + '%';
         
-        // Update time spent
         const timeElement = document.querySelector('.progress-info span:last-child');
         if (timeElement) {
             const match = timeElement.textContent.match(/\d+/);
@@ -104,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Track meaningful interactions
     let interactionCount = 0;
     document.addEventListener('click', function(e) {
         if (e.target.matches('.option-btn, .suggestion-btn') || 
@@ -116,20 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Feedback system
     function showFeedback(message, type) {
-        // Remove existing feedback
         const existingFeedback = document.querySelector('.feedback-message');
         if (existingFeedback) {
             existingFeedback.remove();
         }
 
-        // Create feedback element
         const feedback = document.createElement('div');
         feedback.className = `feedback-message ${type}`;
         feedback.textContent = message;
         
-        // Style the feedback
         Object.assign(feedback.style, {
             position: 'fixed',
             top: '100px',
@@ -149,12 +129,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.body.appendChild(feedback);
 
-        // Animate in
         setTimeout(() => {
             feedback.style.transform = 'translateX(0)';
         }, 100);
 
-        // Auto remove after 4 seconds
         setTimeout(() => {
             feedback.style.transform = 'translateX(100%)';
             setTimeout(() => {
@@ -163,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     }
 
-    // Enhanced panel interactions
     document.querySelectorAll('.panel').forEach(panel => {
         panel.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-4px)';
@@ -174,9 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
-        // Ctrl/Cmd + S to save notes
         if ((e.ctrlKey || e.metaKey) && e.key === 's') {
             e.preventDefault();
             if (notesArea) {
@@ -189,7 +164,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Ctrl/Cmd + Enter to focus on notes
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
             e.preventDefault();
             if (notesArea) {
@@ -198,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize tooltips for action buttons
     document.querySelectorAll('.action-btn').forEach((btn, index) => {
         const tooltips = ['Bookmark this lesson', 'Share lesson'];
         btn.title = tooltips[index] || 'Action';
@@ -212,10 +185,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🌱 Gurukul Learning Interface: Enhanced features loaded');
 });
 
-// Add adaptive indicator content updates
 const adaptiveIndicator = document.querySelector('.adaptive-indicator');
 if (adaptiveIndicator) {
-    // Update indicator text based on active patterns
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             if (mutation.type === 'attributes' && mutation.attributeName === 'class') {

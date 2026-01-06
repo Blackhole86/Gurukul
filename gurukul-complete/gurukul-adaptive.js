@@ -1,6 +1,3 @@
-// Gurukul Adaptive Learning System
-// Built according to learning_alignment_notes.md and pattern library
-
 class GurukulAdaptive {
     constructor() {
         this.activePattern = null;
@@ -32,7 +29,7 @@ class GurukulAdaptive {
         }
     }
 
-    // 1. Gentle Encouragement Pattern - Dwell tracking
+    // Dwell tracking
     setupDwellTracking() {
         document.querySelectorAll('.content-block, .panel, .formula-box').forEach(element => {
             let dwellTimer = null;
@@ -40,7 +37,7 @@ class GurukulAdaptive {
             element.addEventListener('mouseenter', () => {
                 dwellTimer = setTimeout(() => {
                     this.activatePattern('gentle-encouragement', element);
-                }, 3000); // 3 seconds of dwelling
+                }, 3000); 
             });
             
             element.addEventListener('mouseleave', () => {
@@ -49,7 +46,7 @@ class GurukulAdaptive {
         });
     }
 
-    // 2. Calm Clarity Pattern - Hover repeat tracking
+    // Hover repeat tracking
     setupHoverTracking() {
         document.querySelectorAll('.option-btn, .suggestion-btn').forEach(element => {
             element.addEventListener('mouseenter', () => {
@@ -63,11 +60,9 @@ class GurukulAdaptive {
                 const hovers = this.behaviorTrackers.hover.get(elementId);
                 hovers.push(now);
                 
-                // Keep only recent hovers (last 5 seconds)
                 const recentHovers = hovers.filter(time => now - time < 5000);
                 this.behaviorTrackers.hover.set(elementId, recentHovers);
                 
-                // If 3+ hovers in 5 seconds, activate calm clarity
                 if (recentHovers.length >= 3) {
                     this.activatePattern('calm-clarity', element);
                 }
@@ -75,17 +70,15 @@ class GurukulAdaptive {
         });
     }
 
-    // 3. Cognitive Relief Pattern - Stress tracking
+    // Stress tracking
     setupStressTracking() {
         document.addEventListener('click', (e) => {
             const now = Date.now();
             this.behaviorTrackers.stress.clicks.push(now);
             
-            // Keep only recent clicks (last 3 seconds)
             this.behaviorTrackers.stress.clicks = this.behaviorTrackers.stress.clicks
                 .filter(time => now - time < 3000);
             
-            // If 5+ clicks in 3 seconds, activate cognitive relief
             if (this.behaviorTrackers.stress.clicks.length >= 5) {
                 this.activatePattern('cognitive-relief');
             }
@@ -96,36 +89,31 @@ class GurukulAdaptive {
             const now = Date.now();
             mouseMovements.push({ x: e.clientX, y: e.clientY, time: now });
             
-            // Keep only recent movements (last 2 seconds)
             mouseMovements = mouseMovements.filter(move => now - move.time < 2000);
             
-            // Check for erratic movement (high variance in short time)
             if (mouseMovements.length > 20) {
                 const variance = this.calculateMovementVariance(mouseMovements);
-                if (variance > 10000) { // High erratic movement
+                if (variance > 10000) { 
                     this.activatePattern('cognitive-relief');
                 }
             }
         });
     }
 
-    // 4. Rest Invitation Pattern - Fatigue tracking
+    // Fatigue tracking
     setupFatigueTracking() {
         document.addEventListener('click', () => {
             this.behaviorTrackers.fatigue.interactions.push(Date.now());
             this.behaviorTrackers.fatigue.lastActivity = Date.now();
         });
         
-        // Check for fatigue every 30 seconds
         this.fatigueInterval = setInterval(() => {
             const now = Date.now();
             const recentInteractions = this.behaviorTrackers.fatigue.interactions
-                .filter(time => now - time < 60000); // Last minute
-            
-            // Clean up old interactions
+                .filter(time => now - time < 60000); 
+
             this.behaviorTrackers.fatigue.interactions = recentInteractions;
             
-            // If very few interactions in last minute, suggest rest
             if (recentInteractions.length < 3 && 
                 now - this.behaviorTrackers.fatigue.lastActivity > 45000) {
                 this.activatePattern('rest-invitation');
@@ -133,7 +121,7 @@ class GurukulAdaptive {
         }, 30000);
     }
 
-    // 5. Gentle Wayfinding Pattern - Backtrack tracking
+    // Backtrack tracking
     setupBacktrackTracking() {
         document.querySelectorAll('.panel, .content-block').forEach(element => {
             element.addEventListener('click', () => {
@@ -142,11 +130,9 @@ class GurukulAdaptive {
                 
                 this.behaviorTrackers.backtrack.push({ element: elementId, time: now });
                 
-                // Keep only recent navigation (last 10 seconds)
                 this.behaviorTrackers.backtrack = this.behaviorTrackers.backtrack
                     .filter(nav => now - nav.time < 10000);
                 
-                // Check for back-and-forth pattern
                 if (this.behaviorTrackers.backtrack.length >= 4) {
                     const recent = this.behaviorTrackers.backtrack.slice(-4);
                     const isBacktrack = recent[0].element === recent[2].element && 
@@ -160,7 +146,7 @@ class GurukulAdaptive {
         });
     }
 
-    // 6. Sacred Focus Pattern - Deep focus tracking
+    // Deep focus tracking
     setupFocusTracking() {
         document.querySelectorAll('.content-block, .panel').forEach(element => {
             let focusTimer = null;
@@ -172,7 +158,7 @@ class GurukulAdaptive {
                 this.behaviorTrackers.focus.element = element;
                 
                 focusTimer = setTimeout(() => {
-                    // If still focused on same element after 10 seconds
+
                     if (currentElement === element) {
                         this.activatePattern('sacred-focus', element);
                     }
@@ -189,7 +175,6 @@ class GurukulAdaptive {
 
     // Pattern activation
     activatePattern(patternName, targetElement = null) {
-        // Only one pattern at a time
         if (this.activePattern) return;
         
         this.activePattern = patternName;
@@ -220,7 +205,6 @@ class GurukulAdaptive {
         }
     }
 
-    // Pattern implementations
     applyGentleEncouragement(element) {
         if (!element) return;
         element.classList.add('gentle-encouragement');
@@ -298,7 +282,6 @@ class GurukulAdaptive {
     }
 }
 
-// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     new GurukulAdaptive();
     console.log('🌱 Gurukul Adaptive System: Initialized according to learning alignment');
