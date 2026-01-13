@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gurukul Signal Simulator</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #f9fafb;
+      color: #2d3748;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #2c5282;
+    }
+
+    .signal-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .signal-item label {
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      background: #3182ce;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2b6cb0;
+    }
+
+    .results {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f7fafc;
+      border-left: 4px solid #3182ce;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .results p {
+      margin: 6px 0;
+    }
+
+    .state {
+      font-weight: bold;
+      color: #2b6cb0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Gurukul Signal Simulator</h1>
+
+    <div class="signal-list">
+      <div class="signal-item"><input type="checkbox" value="CONFUSION_HIGH"> CONFUSION_HIGH</div>
+      <div class="signal-item"><input type="checkbox" value="CONFUSION_PERSISTENT"> CONFUSION_PERSISTENT</div>
+      <div class="signal-item"><input type="checkbox" value="FOCUS_STABLE"> FOCUS_STABLE</div>
+      <div class="signal-item"><input type="checkbox" value="FOCUS_DROPPING"> FOCUS_DROPPING</div>
+      <div class="signal-item"><input type="checkbox" value="FATIGUE_HIGH"> FATIGUE_HIGH</div>
+      <div class="signal-item"><input type="checkbox" value="FATIGUE_LOW"> FATIGUE_LOW</div>
+      <div class="signal-item"><input type="checkbox" value="NAVIGATION_LOOP"> NAVIGATION_LOOP</div>
+      <div class="signal-item"><input type="checkbox" value="INACTIVITY_LONG"> INACTIVITY_LONG</div>
+      <div class="signal-item"><input type="checkbox" value="ERROR_RATE_HIGH"> ERROR_RATE_HIGH</div>
+      <div class="signal-item"><input type="checkbox" value="PROGRESS_STALLED"> PROGRESS_STALLED</div>
+      <div class="signal-item"><input type="checkbox" value="ENGAGEMENT_DEEP"> ENGAGEMENT_DEEP</div>
+      <div class="signal-item"><input type="checkbox" value="RESPONSE_ERRATIC"> RESPONSE_ERRATIC</div>
+    </div>
+
+    <button onclick="simulate()">Simulate</button>
+
+    <div id="results" class="results">
+      <p><strong>Selected Signals:</strong> <span id="signalsOutput"></span></p>
+      <p><strong>Resolved Learner State:</strong> <span id="stateOutput" class="state"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function resolveLearnerState(signals) {
+      const s = new Set(signals);
+
+      // Overloaded — system breakdown
+      if (
+        (s.has('ERROR_RATE_HIGH') && s.has('RESPONSE_ERRATIC')) ||
+        (s.has('FATIGUE_HIGH') && s.has('ERROR_RATE_HIGH'))
+      ) {
+        return 'overloaded';
+      }
+
+      // Lost — disorientation
+      if (
+        s.has('CONFUSION_PERSISTENT') ||
+        (s.has('CONFUSION_HIGH') && s.has('NAVIGATION_LOOP')) ||
+        (s.has('PROGRESS_STALLED') && s.has('INACTIVITY_LONG'))
+      ) {
+        return 'lost';
+      }
+
+      // Fatigued — resource depletion
+      if (
+        s.has('FATIGUE_HIGH') ||
+        (s.has('FOCUS_DROPPING') && s.has('INACTIVITY_LONG'))
+      ) {
+        return 'fatigued';
+      }
+
+      // Confused — uncertainty
+      if (
+        s.has('CONFUSION_HIGH') ||
+        s.has('NAVIGATION_LOOP') ||
+        s.has('ERROR_RATE_HIGH')
+      ) {
+        return 'confused';
+      }
+
+      // Flow — optimal state
+      if (
+        s.has('FOCUS_STABLE') &&
+        s.has('ENGAGEMENT_DEEP') &&
+        !s.has('FATIGUE_HIGH')
+      ) {
+        return 'flow';
+      }
+
+      // Default
+      return 'focused';
+    }
+
+    function simulate() {
+      const checked = document.querySelectorAll('input[type="checkbox"]:checked');
+      const signals = Array.from(checked).map(cb => cb.value);
+
+      const state = resolveLearnerState(signals);
+
+      document.getElementById('signalsOutput').textContent =
+        signals.length ? signals.join(', ') : 'None';
+
+      document.getElementById('stateOutput').textContent = state;
+      document.getElementById('results').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

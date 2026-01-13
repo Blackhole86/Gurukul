@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Interface - Gurukul</title>
+    <link rel="stylesheet" href="learning-styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="logo">G</div>
+                <span class="brand-text">Gurukul</span>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-outline" onclick="window.location.href='index.html'">← Back to Home</button>
+                <div class="user-profile">
+                    <span>Rukayya</span>
+                    <div class="avatar">R</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="learning-container">
+        <header class="learning-header">
+            <div class="course-info">
+                <h1>Ancient Mathematics - Chapter 3</h1>
+                <p class="course-subtitle">The Pythagorean Theorem and Sacred Geometry</p>
+            </div>
+            <div class="progress-section">
+                <div class="progress-info">
+                    <span>Progress: 45%</span>
+                    <span>Time: 23 min</span>
+                </div>
+                <div class="progress-indicator">
+                    <div class="progress-bar" style="width: 45%"></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="learning-workspace">
+            <!-- Lesson Panel -->
+            <section class="panel lesson-panel" id="lessonPanel">
+                <div class="panel-header">
+                    <h2>📚 Lesson Content</h2>
+                    <div class="panel-actions">
+                        <button class="action-btn">🔖</button>
+                        <button class="action-btn">📤</button>
+                    </div>
+                </div>
+                <div class="content-block" id="mainContent">
+                    <p>In ancient India, mathematicians discovered profound relationships in geometry that connected the physical and spiritual worlds.</p>
+                    <p>The Pythagorean theorem states that in a right triangle, the square of the hypotenuse equals the sum of squares of the other two sides.</p>
+                    <div class="formula-box">
+                        <div class="formula-title">Mathematical Formula</div>
+                        a² + b² = c²
+                    </div>
+                    <p>This relationship appears in temple architecture, astronomical calculations, and spiritual geometry throughout Indian tradition.</p>
+                    <div class="insight-box">
+                        <h4>💡 Ancient Wisdom</h4>
+                        <p>Ancient Indian texts (800-200 BCE) contain the earliest known statements of this theorem, appearing centuries before Pythagoras.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notes Panel -->
+            <section class="panel notes-panel" id="notesPanel">
+                <div class="panel-header">
+                    <h3>📝 Your Reflections</h3>
+                </div>
+                <textarea placeholder="Write your thoughts, questions, and insights here..." id="notesArea"></textarea>
+                <div class="note-suggestions">
+                    <button class="suggestion-btn" data-suggestion="Key insight: ">💡 Key insight</button>
+                    <button class="suggestion-btn" data-suggestion="Question: ">❓ Question</button>
+                    <button class="suggestion-btn" data-suggestion="Connection: ">🔗 Connection</button>
+                </div>
+                <div class="notes-footer">
+                    <span class="auto-save">✓ Auto-saved</span>
+                </div>
+            </section>
+
+            <!-- Question Panel -->
+            <section class="panel question-panel" id="questionPanel">
+                <div class="panel-header">
+                    <h3>🎯 Practice</h3>
+                    <span class="question-counter">1 of 3</span>
+                </div>
+                <div class="question-content">
+                    <p>A temple architect needs to create a right triangle with sides of 3 units and 4 units. What should be the length of the hypotenuse?</p>
+                    <div class="answer-options">
+                        <button class="option-btn" data-answer="a">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">5 units</span>
+                        </button>
+                        <button class="option-btn" data-answer="b">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">7 units</span>
+                        </button>
+                        <button class="option-btn" data-answer="c">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">25 units</span>
+                        </button>
+                        <button class="option-btn" data-answer="d">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">12 units</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Help Panel -->
+            <section class="panel help-panel" id="helpPanel">
+                <div class="panel-header">
+                    <h3>🤝 Guidance</h3>
+                </div>
+                <div class="help-content">
+                    <div class="help-item">
+                        <h4>Understanding the Formula</h4>
+                        <p>In a right triangle: the two shorter sides when squared and added equal the square of the longest side (hypotenuse).</p>
+                    </div>
+                    <div class="help-item">
+                        <h4>Visual Guide</h4>
+                        <div class="triangle-diagram">
+                            <div class="triangle">
+                                <span class="side-label a">a = 3</span>
+                                <span class="side-label b">b = 4</span>
+                                <span class="side-label c">c = ?</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <h4>Step by Step</h4>
+                        <ol>
+                            <li>Square both known sides: 3² = 9, 4² = 16</li>
+                            <li>Add them together: 9 + 16 = 25</li>
+                            <li>Find the square root: √25 = 5</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="adaptive-indicator" id="adaptiveIndicator">
+            🌱 Learning with you
+            <div class="engine-status" id="engineStatus">⚙️ Loading...</div>
+        </div>
+    </div>
+
+    <script src="adaptive-engine.js"></script>
+    <script src="calm-patterns.js"></script>
+    <script src="state-binder.js"></script>
+    <script src="state_resolution_engine.js"></script>
+    <script src="safety_governor.js"></script>
+    <script src="learning-script.js"></script>
+    <script src="gurukul-adaptive.js"></script>
+</body>
+</html>
